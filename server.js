@@ -1,7 +1,7 @@
 const express = require('express')
 const PORT = 8000;
 const cors = require('cors')
-app.use(cors());
+
 // request express// 
 
 const rappers ={
@@ -21,11 +21,11 @@ const rappers ={
 
 
    } ,
-   'dylan':{
+   'unknown':{
 
-    'age': 29,
-    'birthname' :'Dylan',
-    'birthlocaion': 'Chicago, Illinois'
+    'age': 0,
+    'birthname' :'unknown',
+    'birthlocaion': 'unknown'
 
 
    } 
@@ -33,10 +33,15 @@ const rappers ={
 
 const app = express();
 // create an variable that holds express 
-
+app.use(cors());
 app.get('/', (request, response)=>{
    response.sendFile(__dirname + '/index.html')
    // __dirname - start from whre server.js is located and find the html 
+})
+
+app.get('/api', (request, response)=>{
+    response.json(rappers);
+
 })
 
 app.get('/api/:rapperName', (request, response)=>{
@@ -47,10 +52,16 @@ if(rappers[rappersName]){
     response.json(rappers[rappersName]);
 
 }else{
-    response.json(rappers['dylan']);
+    response.json(rappers['unknown']);
 }
     //  response.json(rappers);
 })
+
+
+
+
+
+
 
 app.listen(process.env.PORT || PORT, ()=>{
     console.log(`The server is running on ${PORT}!`)
